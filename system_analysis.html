@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đặc tả Hệ thống Quản lý Khoán Sản lượng Cao su — Ecotech 2A</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #0d1117;
+  --ink-2:     #3a4150;
+  --ink-3:     #6b7385;
+  --surface:   #f5f6f8;
+  --white:     #ffffff;
+  --border:    #e2e5ec;
+  --green-d:   #0a4c2e;
+  --green:     #1a7a4a;
+  --green-m:   #2ca866;
+  --green-l:   #d4f0e2;
+  --green-xl:  #f0faf5;
+  --blue-d:    #0b3d6b;
+  --blue:      #1a5fa8;
+  --blue-l:    #d0e8ff;
+  --blue-xl:   #eef6ff;
+  --amber:     #c47a0a;
+  --amber-l:   #fef3c7;
+  --red:       #c0262a;
+  --red-l:     #fde8e8;
+  --indigo:    #3730a3;
+  --indigo-l:  #e0e7ff;
+  --slate:     #334155;
+  --accent:    #0fc47a;
+  --r:         8px;
+  --r2:        14px;
+  --shadow:    0 1px 4px rgba(0,0,0,.07), 0 4px 18px rgba(0,0,0,.05);
+  --shadow-lg: 0 4px 8px rgba(0,0,0,.08), 0 16px 48px rgba(0,0,0,.09);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Be Vietnam Pro', sans-serif; font-size: 14px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 0; overflow-x: auto;
+}
+nav a {
+  display: inline-block; padding: 14px 16px;
+  font-size: 12px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase;
+  color: var(--ink-3); text-decoration: none; white-space: nowrap;
+  border-bottom: 2px solid transparent; transition: color .2s, border-color .2s;
+}
+nav a:hover { color: var(--green); border-bottom-color: var(--green); }
+nav .logo { font-weight: 800; font-size: 13px; color: var(--green-d); margin-right: 24px; white-space: nowrap; padding: 14px 0; }
+
+.hero {
+  background: linear-gradient(135deg, var(--green-d) 0%, #0d7a46 60%, #1a9c58 100%);
+  color: #fff; padding: 64px 40px 72px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner { max-width: 900px; margin: 0 auto; position: relative; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+  padding: 4px 14px; border-radius: 99px; font-size: 11px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 20px; backdrop-filter: blur(4px);
+}
+.hero h1 { font-size: clamp(24px, 4vw, 38px); font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero-sub { font-size: 15px; opacity: .82; max-width: 620px; line-height: 1.65; margin-bottom: 32px; }
+.hero-stats { display: flex; flex-wrap: wrap; gap: 16px; }
+.hero-stat {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  padding: 14px 22px; border-radius: var(--r2); backdrop-filter: blur(4px);
+}
+.hero-stat .val { font-size: 22px; font-weight: 800; display: block; }
+.hero-stat .lbl { font-size: 10px; opacity: .72; text-transform: uppercase; letter-spacing: .06em; }
+
+.wrapper { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+section { margin-top: 56px; }
+.section-head {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+  padding-bottom: 14px; border-bottom: 2px solid var(--border);
+}
+.section-head .icon {
+  width: 38px; height: 38px; border-radius: var(--r); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800;
+}
+.section-head h2 { font-size: 18px; font-weight: 800; color: var(--ink); }
+.section-head span { font-size: 12px; color: var(--ink-3); margin-left: 6px; font-weight: 400; }
+
+.card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r2); box-shadow: var(--shadow); overflow: hidden;
+}
+.card-head {
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.card-body { padding: 20px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media(max-width: 700px){ .grid2,.grid3,.grid4 { grid-template-columns: 1fr; } }
+
+.level-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+@media(max-width:700px){ .level-strip { grid-template-columns: 1fr 1fr; } }
+.level-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r2); padding: 18px 16px; text-align: center;
+  border-top: 4px solid;
+}
+.level-card .num { font-size: 28px; font-weight: 800; line-height: 1; }
+.level-card .title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin: 8px 0 4px; }
+.level-card .desc { font-size: 11px; color: var(--ink-3); line-height: 1.5; }
+.lc-1 { border-top-color: var(--green); } .lc-1 .num { color: var(--green); }
+.lc-2 { border-top-color: var(--blue); } .lc-2 .num { color: var(--blue); }
+.lc-3 { border-top-color: var(--indigo); } .lc-3 .num { color: var(--indigo); }
+.lc-4 { border-top-color: var(--slate); } .lc-4 .num { color: var(--slate); }
+
+.flow-list { display: flex; flex-direction: column; gap: 12px; }
+.flow-step {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r2);
+  padding: 16px 18px; transition: box-shadow .2s;
+}
+.flow-step:hover { box-shadow: var(--shadow-lg); }
+.flow-step .step-num {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: #fff;
+}
+.flow-step .step-content h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.flow-step .step-content p { font-size: 12px; color: var(--ink-2); line-height: 1.6; }
+
+.rule-box {
+  border-radius: var(--r2); padding: 16px 18px; margin-bottom: 10px;
+  border-left: 4px solid;
+}
+.rule-box.green  { background: var(--green-xl); border-left-color: var(--green-m); }
+.rule-box.blue   { background: var(--blue-xl); border-left-color: var(--blue); }
+.rule-box.amber  { background: var(--amber-l); border-left-color: var(--amber); }
+.rule-box.red    { background: var(--red-l); border-left-color: var(--red); }
+.rule-box.indigo { background: var(--indigo-l); border-left-color: var(--indigo); }
+.rule-box .rule-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px;
+}
+.rule-box p { font-size: 12.5px; line-height: 1.65; }
+.rule-box.green .rule-label { color: var(--green); }
+.rule-box.blue  .rule-label { color: var(--blue); }
+.rule-box.amber .rule-label { color: var(--amber); }
+.rule-box.red   .rule-label { color: var(--red); }
+.rule-box.indigo .rule-label { color: var(--indigo); }
+
+.tbl-wrap { overflow-x: auto; border-radius: var(--r2); border: 1px solid var(--border); }
+table { border-collapse: collapse; width: 100%; font-size: 12px; }
+thead { background: var(--ink); color: #fff; }
+thead th { padding: 10px 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; text-align: left; white-space: nowrap; }
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--green-xl); }
+td { padding: 10px 14px; vertical-align: top; }
+td.num { font-family: 'JetBrains Mono', monospace; text-align: right; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 99px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+}
+.badge.green { background: var(--green-l); color: var(--green-d); }
+.badge.blue  { background: var(--blue-l); color: var(--blue-d); }
+.badge.red   { background: var(--red-l); color: var(--red); }
+.badge.amber { background: var(--amber-l); color: var(--amber); }
+.badge.indigo{ background: var(--indigo-l); color: var(--indigo); }
+.badge.slate { background: #e2e8f0; color: var(--slate); }
+
+.formula {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  background: var(--ink); color: var(--accent);
+  border-radius: var(--r); padding: 14px 20px; text-align: center; margin: 14px 0;
+  letter-spacing: .03em;
+}
+
+.callout {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: #fffbeb; border: 1px solid #fcd34d; border-radius: var(--r2); padding: 14px 18px; margin: 16px 0;
+}
+.callout .icon { font-size: 18px; flex-shrink: 0; }
+.callout p { font-size: 12.5px; line-height: 1.65; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:640px){ .two-col { grid-template-columns: 1fr; } }
+
+hr.divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+/* ── USER STORIES ── */
+.story-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px 16px;
+  border-left: 4px solid var(--green);
+  transition: box-shadow .2s, transform .2s;
+  margin-bottom: 0;
+}
+.story-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.story-role {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .05em;
+  background: var(--green-l); color: var(--green-d);
+  padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+.story-text {
+  font-size: 12.5px; font-weight: 600; color: var(--ink);
+  line-height: 1.5; margin-bottom: 10px;
+}
+.story-ac {
+  font-size: 11.5px; color: var(--ink-2); line-height: 1.7;
+  padding-left: 12px; border-left: 2px solid var(--border);
+}
+.story-ac b { color: var(--ink); }
+
+.tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .04em; margin-right: 4px; }
+.tag.out { background: #fee2e2; color: #991b1b; }
+.tag.in  { background: var(--green-l); color: var(--green-d); }
+.tag.tbd { background: #f1f5f9; color: #475569; }
+
+ul.check-list { list-style: none; padding: 0; }
+ul.check-list li { padding: 5px 0 5px 26px; position: relative; font-size: 12.5px; color: var(--ink-2); }
+ul.check-list li::before { content: '✓'; position: absolute; left: 0; color: var(--green-m); font-weight: 800; }
+ul.check-list li.no::before { content: '✗'; color: var(--red); }
+
+footer {
+  background: var(--ink); color: rgba(255,255,255,.6);
+  text-align: center; padding: 32px 24px; font-size: 11px; line-height: 1.8;
+  margin-top: 80px;
+}
+footer strong { color: rgba(255,255,255,.9); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">🌿 Ecotech 2A</span>
+  <a href="#scope">Phạm vi</a>
+  <a href="#flow-alloc">Phân bổ</a>
+  <a href="#rules">Nghiệp vụ</a>
+  <a href="#carry">Lũy kế</a>
+  <a href="#stories">User Stories</a>
+  <a href="#data">Cấu trúc dữ liệu</a>
+  <a href="#stats">Thống kê</a>
+  <a href="#api">Tích hợp API</a>
+  <a href="#risk">Rủi ro</a>
+  <a href="#effort">Công lực</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">📋 Đặc tả hệ thống v1.0 — Phân hệ Khoán Sản lượng</div>
+    <h1>Hệ thống Quản lý Khoán Sản lượng Cao su</h1>
+    <p class="hero-sub">Mô tả toàn bộ nghiệp vụ, luồng dữ liệu, quy tắc tính toán và yêu cầu kỹ thuật cho phân hệ Khoán — tích hợp với Sổ mủ điện tử.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="val">4</span><span class="lbl">Cấp quản lý</span></div>
+      <div class="hero-stat"><span class="val">4</span><span class="lbl">Tác nhân</span></div>
+      <div class="hero-stat"><span class="val">36</span><span class="lbl">User Stories</span></div>
+      <div class="hero-stat"><span class="val">10</span><span class="lbl">Biểu mẫu xuất</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<!-- ════ SECTION 1: SCOPE ════ -->
+<section id="scope">
+  <div class="section-head">
+    <div class="icon" style="background:var(--green-l); color:var(--green-d)">①</div>
+    <h2>Phạm vi & Mô hình 4 Cấp<span>Scope & Architecture</span></h2>
+  </div>
+  <div class="level-strip" style="margin-bottom:20px">
+    <div class="level-card lc-1"><div class="num">01</div><div class="title">Công ty</div><div class="desc">Phòng KT nhập kế hoạch Tập Đoàn, phân bổ xuống Đội, cài % tháng & phấn đấu</div></div>
+    <div class="level-card lc-2"><div class="num">02</div><div class="title">Đội sản xuất</div><div class="desc">Nhận KPI, phân bổ xuống Ga tháng, điều chỉnh lũy kế, duyệt giao khoán</div></div>
+    <div class="level-card lc-3"><div class="num">03</div><div class="title">Ga / Tổ</div><div class="desc">Nhận KPI tháng, gán SPC từng công nhân, lưu lịch sử điều chuyển</div></div>
+    <div class="level-card lc-4"><div class="num">04</div><div class="title">Công nhân</div><div class="desc">Thực thi tại vườn cây; Trưởng Ga ghi sản lượng tại Sổ mủ điện tử</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head" style="background:var(--green-l); color:var(--green-d)">✅ Trong phạm vi (In-Scope)</div>
+      <div class="card-body">
+        <ul class="check-list">
+          <li>Khởi tạo & quản lý kế hoạch khoán <strong>năm</strong> toàn công ty (kg quy khô)</li>
+          <li>Phân bổ khoán năm → Đội → Ga → Công nhân</li>
+          <li>Lập kế hoạch tháng điều hành (% hoặc kg) linh hoạt theo mùa vụ</li>
+          <li>Cài mục tiêu <strong>Phấn đấu</strong> (khoán CC + khoán PĐ cộng thêm)</li>
+          <li>Giao khoán tháng cho từng Ga (chỉ thấy KPI tháng, không thấy KPI năm)</li>
+          <li>Thiết lập SPC (Phần cây chính, Cạo choàng, Phần trống) cho từng công nhân</li>
+          <li>Ghi nhận & đồng bộ sản lượng từ Sổ mủ điện tử (daily)</li>
+          <li>Lũy kế tháng / năm; điều chỉnh lũy kế bù trừ sang tháng kế tiếp</li>
+          <li>Đánh giá KPI: đạt / vượt / không đạt; xếp hạng khen thưởng</li>
+          <li>Cảnh báo Ga chưa đặt chỉ tiêu</li>
+          <li>Export / Import Excel theo định dạng mẫu (10 biểu mẫu)</li>
+          <li>Thông báo qua Gmail theo phân quyền</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head" style="background:var(--red-l); color:var(--red)">❌ Ngoài phạm vi (Out-of-Scope)</div>
+      <div class="card-body">
+        <ul class="check-list">
+          <li class="no">Tính lương công nhân (thuộc HR/Payroll)</li>
+          <li class="no">Quản lý hồ sơ nhân sự chi tiết</li>
+          <li class="no">Nhập sản lượng hàng ngày (nằm 100% ở Sổ mủ điện tử)</li>
+          <li class="no">Thu mua mủ ngoài hệ thống nội bộ</li>
+          <li class="no">Quản lý danh sách công nhân (đã có ở Sổ mủ)</li>
+        </ul>
+        <hr class="divider">
+        <div class="rule-box amber" style="margin-bottom:0">
+          <div class="rule-label">⚡ Điểm ranh giới quan trọng</div>
+          <p>Hệ thống Khoán <strong>không nhập mủ</strong>. Nó chỉ <strong>đọc / GET</strong> dữ liệu sản lượng từ Sổ mủ thông qua API nội bộ, rồi đối chiếu với chỉ tiêu để tính KPI.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SECTION 2: FLOW ALLOC ════ -->
+<section id="flow-alloc">
+  <div class="section-head">
+    <div class="icon" style="background:var(--blue-l); color:var(--blue-d)">②</div>
+    <h2>Flow 1 — Phân bổ Khoán<span>Plan & Allocation Flow (B1–B13)</span></h2>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-head" style="background:var(--green-d); color:#fff"><span>🏢 Cấp 1 — CÔNG TY (Phòng Kỹ thuật)</span><span class="badge green">B1 → B5</span></div>
+    <div class="card-body">
+      <div class="flow-list">
+        <div class="flow-step"><div class="step-num" style="background:var(--green)">B1</div><div class="step-content"><h4>Khởi tạo Khoán năm — Baseline bất biến</h4><p>Nhập tổng sản lượng kế hoạch Tập đoàn giao (kg quy khô). Ví dụ: <strong>8.886 tấn (2025)</strong>. Dữ liệu này <em>không chỉnh sửa</em>; thay đổi quy mô chỉ qua luồng <strong>Khoán bổ sung</strong>.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--green)">B2</div><div class="step-content"><h4>Phân bổ khoán năm xuống từng Đội</h4><p>Chia tổng theo % hoặc kg quy khô. Tổng phân bổ các Đội <strong>= Baseline</strong>. Đội <em>không tự sửa</em>, chỉ Phòng KT điều chỉnh.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--green)">B3</div><div class="step-content"><h4>Cài đặt kế hoạch tháng điều hành</h4><p>Lập đầu năm. Phân % hoặc kg mỗi tháng <em>không đều</em> tùy mùa mưa, lao động, nhịp mở cạo. Ví dụ: tháng 11 = 12%, tháng 12 = 12.5%. Được phép điều chỉnh trong năm khi thực tế lệch.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--green)">B4</div><div class="step-content"><h4>Cài đặt mục tiêu Phấn đấu</h4><p>Nhập % vượt hoặc kg vượt áp dụng cho toàn công ty và từng Đội. Đây là ngưỡng thưởng.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--green-d)">B5</div><div class="step-content"><h4>Giao khoán xuống Đội — Lock dữ liệu</h4><p>Sau khi duyệt: Đội nhận KPI pháp lệnh năm + KPI tháng. Hệ thống <strong>lock</strong> giá trị gốc; mọi thay đổi sau tạo version mới.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-head" style="background:var(--blue-d); color:#fff"><span>🏗 Cấp 2 — ĐỘI sản xuất</span><span class="badge blue">B6 → B10</span></div>
+    <div class="card-body">
+      <div class="flow-list">
+        <div class="flow-step"><div class="step-num" style="background:var(--blue)">B6</div><div class="step-content"><h4>Nhận KPI pháp lệnh + kế hoạch tháng từ Công ty</h4><p>Hệ thống hiển thị chỉ tiêu năm, kế hoạch tháng và mục tiêu phấn đấu. Đội không sửa giá trị gốc.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--blue)">B7</div><div class="step-content"><h4>Phân bổ khoán tháng xuống từng Ga</h4><p><strong>Ràng buộc: Σ(KPI Ga) = KPI Đội tháng đó</strong>. Phân theo % hoặc kg. Có duyệt để thực thi.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--blue)">B8</div><div class="step-content"><h4>Theo dõi & Điều chỉnh kế hoạch điều hành trong tháng</h4><p>Theo dõi chênh lệch thiếu/vượt; điều chỉnh % tháng kế tiếp theo nguyên tắc lũy kế bù trừ sang kỳ sau.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--blue)">B9</div><div class="step-content"><h4>Cài đặt khoán Phấn đấu tháng/năm cho Ga</h4><p>Tương tự B4 nhưng ở cấp Đội → Ga. Cho phép cài riêng từng Ga.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--blue-d)">B10</div><div class="step-content"><h4>Duyệt & Chốt lệnh giao khoán xuống Ga</h4><p>Sau khi duyệt, Ga chỉ thấy <strong>KPI tháng đó</strong>, không thấy KPI năm của Đội.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head" style="background:var(--indigo); color:#fff"><span>🌿 Cấp 3 — GA / Tổ + Cấp 4 — Công nhân</span><span class="badge indigo">B11 → B13</span></div>
+    <div class="card-body">
+      <div class="flow-list">
+        <div class="flow-step"><div class="step-num" style="background:var(--indigo)">B11</div><div class="step-content"><h4>Nhận KPI tháng — Căn cứ theo dõi</h4><p>Hệ thống tự hiển thị sản lượng khoán tháng từ bảng phân bổ cấp Đội. Đây là chỉ tiêu duy nhất Ga thấy.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--indigo)">B12</div><div class="step-content"><h4>Thiết lập SPC (Phần cây) cho từng Công nhân</h4><p>Phân bổ khoán theo phần cây. Lưu lịch sử thay người. Hỗ trợ 4 loại: Khoán CC, Cạo choàng, Phần trống, Phấn đấu.</p></div></div>
+        <div class="flow-step"><div class="step-num" style="background:var(--slate)">B13</div><div class="step-content"><h4>Ghi nhận sản lượng thu hoạch hàng ngày (tại Sổ mủ)</h4><p><strong>Actor: Trưởng Ga</strong> — nhập vào Sổ mủ điện tử. Hệ thống Khoán GET dữ liệu về để tính KPI. Dữ liệu gốc không chỉnh tại module Khoán.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SECTION 3: RULES ════ -->
+<section id="rules">
+  <div class="section-head">
+    <div class="icon" style="background:var(--amber-l); color:var(--amber)">③</div>
+    <h2>Quy tắc Nghiệp vụ Chi tiết<span>Business Rules</span></h2>
+  </div>
+  <div class="grid2" style="margin-bottom:16px">
+    <div>
+      <div class="rule-box red"><div class="rule-label">🔒 Rule #1 — Baseline bất biến</div><p>Khoán năm (B1) là <strong>gốc bất biến</strong>. Mọi bổ sung sản lượng phải tạo record mới <strong>"Khoán bổ sung"</strong> kèm versioning.</p></div>
+      <div class="rule-box amber"><div class="rule-label">⚖️ Rule #2 — Ràng buộc tổng phân bổ</div><p>Tại mỗi cấp: <strong>Σ(cấp dưới) = Chỉ tiêu cấp trên</strong>. Nếu tổng không khớp, hệ thống cảnh báo và không cho lưu.</p></div>
+      <div class="rule-box green"><div class="rule-label">👁 Rule #3 — Ga chỉ thấy KPI tháng</div><p>Ga <em>không nhìn thấy</em> chỉ tiêu năm của Đội. Cứ đầu tháng nhận một con số: "tháng này Ga cần đạt X kg".</p></div>
+    </div>
+    <div>
+      <div class="rule-box indigo"><div class="rule-label">📅 Rule #4 — Điều chỉnh giữa tháng cascade</div><p>Khi Phòng KT thay đổi % tháng, hệ thống <strong>tự động scale down</strong> chỉ tiêu các cấp dưới theo cùng tỷ lệ %. KPI gốc không bị ghi đè.</p></div>
+      <div class="rule-box blue"><div class="rule-label">🔄 Rule #5 — Điều chuyển công nhân giữa tháng</div><p>Khi CN chuyển Ga: <strong>chốt sản lượng CN cũ</strong> tại thời điểm điều chuyển. CN mới tiếp nhận phần cây và theo dõi sản lượng riêng. Lịch sử lưu đầy đủ với timestamp.</p></div>
+      <div class="rule-box amber"><div class="rule-label">⚠️ Rule #6 — Sản lượng còn lại âm</div><p>Khi CN vượt khoán năm, <code>remaining_kg</code> âm. Hệ thống vẫn ghi nhận, hiển thị <strong>VƯỢT KHOÁN</strong> và tính vào thưởng.</p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head" style="background: var(--ink); color:#fff">📊 Cấu trúc SPC 4 Loại — Từ dữ liệu thực tế</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Loại SPC</th><th>Diễn giải</th><th>Ví dụ (XLS thực)</th><th>Ghi chú</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge green">Khoán CC</span></td><td>Phần cây chính thức</td><td class="num">200 kg/tháng</td><td>Luôn có; cơ sở đánh giá chính</td></tr>
+            <tr><td><span class="badge blue">Cạo choàng</span></td><td>Phần cây tạm thời (thay người)</td><td class="num">740 kg/tháng</td><td>Khi CN khác nghỉ/điều chuyển</td></tr>
+            <tr><td><span class="badge amber">Phần trống</span></td><td>Phần cây chưa giao người</td><td class="num">679 kg/tháng</td><td>worker_id = NULL; SL = 0 thực tế</td></tr>
+            <tr><td><span class="badge indigo">Khoán PĐ</span></td><td>Sản lượng phấn đấu thêm (~+5%)</td><td class="num">50 → 100 kg</td><td>Ngưỡng thưởng vượt khoán</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="formula">SL_Khoán_Tháng = Khoán_CC + Cạo_choàng + Phần_trống (nếu có)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SECTION 4: CARRY ════ -->
+<section id="carry">
+  <div class="section-head">
+    <div class="icon" style="background:var(--indigo-l); color:var(--indigo)">④</div>
+    <h2>Flow 2, 3, 4 — Điều chỉnh & Lũy kế<span>Adaptive KPI + Bù trừ sang kỳ sau</span></h2>
+  </div>
+  <div class="two-col" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-head" style="background:var(--ink); color:#fff">🔄 Flow 2: Khoán bổ sung</div>
+      <div class="card-body">
+        <div class="flow-list">
+          <div class="flow-step"><div class="step-num" style="background:var(--green)">1</div><div class="step-content"><h4>Tập đoàn ra quyết định bổ sung sản lượng</h4><p>Phòng KT tạo bản ghi "Khoán bổ sung" mới (không ghi đè baseline).</p></div></div>
+          <div class="flow-step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><h4>Phân bổ lại Công ty → Đội → Ga → CN</h4><p>Chạy lại toàn bộ luồng B2–B12 cho phần bổ sung. Dữ liệu gốc giữ nguyên.</p></div></div>
+          <div class="flow-step"><div class="step-num" style="background:var(--indigo)">3</div><div class="step-content"><h4>Versioning & Audit log</h4><p>Mỗi lần bổ sung = 1 version có timestamp, người thực hiện, lý do, số quyết định.</p></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head" style="background:var(--ink); color:#fff">📈 Flow 3: Điều chỉnh kế hoạch tháng (Adaptive KPI)</div>
+      <div class="card-body">
+        <div class="rule-box blue" style="margin-bottom:12px"><div class="rule-label">Ví dụ thực tế</div><p>Kế hoạch năm 10.500 tấn. Tháng 3–4 thực hiện thấp hơn dự kiến. Phòng KT điều chỉnh từ 12% → 12.5%/tháng cho các tháng còn lại để đảm bảo đạt chỉ tiêu năm.</p></div>
+        <div class="formula">% tháng mới = SL còn lại năm / (BQ tháng còn lại)</div>
+        <p style="font-size:12px; color:var(--ink-3); margin-top:8px">Khi % tháng thay đổi → hệ thống <strong>tự scale cascade</strong> KPI Đội, Ga, CN tương ứng. Không phải nhập lại thủ công từng cấp.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head" style="background: var(--green-d); color:#fff">🔁 Flow 4: Lũy kế bù trừ — Logic chi tiết (Bù trừ sang kỳ sau)</div>
+    <div class="card-body">
+      <div class="formula">Quota hiệu lực T+1 = Quota gốc T+1 + (Planned_T − Actual_T)</div>
+      <div class="tbl-wrap" style="margin-top:16px">
+        <table>
+          <thead><tr><th>Tình huống</th><th>Tháng hiện tại</th><th>Tháng kế tiếp</th><th>Xử lý hệ thống</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge red">Thiếu</span></td><td>Actual &lt; Planned</td><td>Quota tăng thêm phần thiếu</td><td>Lưu <code>carry_deficit</code>; cộng vào Quota T+1</td></tr>
+            <tr><td><span class="badge green">Vượt</span></td><td>Actual &gt; Planned</td><td>Quota giảm đi phần dư</td><td>Lưu <code>carry_surplus</code>; trừ khỏi Quota T+1</td></tr>
+            <tr><td><span class="badge blue">Đúng</span></td><td>Actual = Planned</td><td>Không thay đổi</td><td><code>carry = 0</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:14px">
+        <span class="icon">⚠️</span>
+        <p><strong>Quan trọng:</strong> Bù trừ sang kỳ sau <em>lưu riêng trường</em> <code>carry_delta</code>, không ghi đè <code>quota_original</code>. Giao diện phải hiển thị rõ: <strong>KPI gốc</strong> | <strong>± Bù trừ</strong> | <strong>= KPI hiệu lực</strong>. Ba con số này khác nhau và đều cần audit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SECTION 5: USER STORIES ════ -->
+<section id="stories">
+  <div class="section-head">
+    <div class="icon" style="background:var(--indigo-l); color:var(--indigo)">🚀</div>
+    <h2>User Stories Chi tiết<span>Đầy đủ theo nghiệp vụ thực tế — 4 tác nhân + System Jobs</span></h2>
+  </div>
+
+  <div class="callout" style="margin-bottom:24px">
+    <span class="icon">📌</span>
+    <p>User Stories theo format: <strong>"As a [role], I want [action], so that [benefit]"</strong>. Acceptance Criteria (AC) là điều kiện hệ thống phải đáp ứng để story được coi là <em>Done</em>. Các story được nhóm theo tác nhân và sắp xếp theo thứ tự nghiệp vụ.</p>
+  </div>
+
+  <!-- ══ ACTOR 1: PHÒNG KỸ THUẬT ══ -->
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-head" style="background:var(--green-d); color:#fff; font-size:13px">
+      🏢 Tác nhân 1 — Phòng Kỹ thuật (Cấp Công ty)
+      <span class="badge" style="background:rgba(255,255,255,.2); color:#fff">US-01 → US-12</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin-bottom:12px">A — Quản lý Khoán năm Baseline</p>
+      <div class="grid2" style="margin-bottom:20px">
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-01 · Khởi tạo khoán năm</div>
+          <div class="story-text">Là Phòng KT, tôi muốn nhập tổng sản lượng kế hoạch năm do Tập Đoàn giao (kg quy khô) để làm Baseline pháp lệnh cho toàn Công ty.</div>
+          <div class="story-ac">
+            <b>AC-01a:</b> Sau khi lưu, giá trị baseline bị khóa — không có trường nào cho phép chỉnh sửa trực tiếp.<br>
+            <b>AC-01b:</b> Record lưu đầy đủ: năm, tổng kg, người tạo, timestamp, trạng thái = <code>BASELINE</code>.<br>
+            <b>AC-01c:</b> Nếu năm đó đã có baseline, hệ thống cảnh báo và không cho tạo thêm — chỉ được tạo "Khoán bổ sung".
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-02 · Tạo khoán bổ sung</div>
+          <div class="story-text">Là Phòng KT, khi Tập Đoàn có quyết định tăng sản lượng, tôi muốn tạo "Khoán bổ sung" để cộng thêm vào baseline gốc mà không xóa hay ghi đè dữ liệu cũ.</div>
+          <div class="story-ac">
+            <b>AC-02a:</b> Khoán bổ sung là record độc lập: liên kết <code>parent_annual_id</code>, ghi nhận kg bổ sung, lý do, ngày hiệu lực, số quyết định.<br>
+            <b>AC-02b:</b> Tổng khoán năm hiển thị = Baseline + Σ(bổ sung). Giao diện cho thấy riêng từng phần.<br>
+            <b>AC-02c:</b> Sau khi tạo, hệ thống yêu cầu phân bổ phần bổ sung xuống Đội (chạy lại B2 cho phần delta).
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-03 · Phân bổ khoán năm xuống Đội</div>
+          <div class="story-text">Là Phòng KT, tôi muốn chia tổng khoán năm xuống từng Đội theo % hoặc kg để mỗi Đội biết chỉ tiêu năm của mình.</div>
+          <div class="story-ac">
+            <b>AC-03a:</b> Cho phép nhập theo % hoặc kg; hệ thống tự chuyển đổi qua lại.<br>
+            <b>AC-03b:</b> Ràng buộc cứng: Σ(kg các Đội) = Tổng khoán năm. Nếu không khớp, hiện cảnh báo đỏ và không cho lưu.<br>
+            <b>AC-03c:</b> Đội không thể tự sửa chỉ tiêu năm — chỉ Phòng KT có quyền chỉnh.<br>
+            <b>AC-03d:</b> Hỗ trợ Import Excel theo mẫu để nhập nhanh khi có nhiều Đội.
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-04 · Xem lịch sử phiên bản khoán</div>
+          <div class="story-text">Là Phòng KT, tôi muốn xem toàn bộ lịch sử khoán năm (baseline + các lần bổ sung) để audit và giải trình với Tập Đoàn khi cần.</div>
+          <div class="story-ac">
+            <b>AC-04a:</b> Timeline hiển thị: ngày tạo, loại (<code>BASELINE</code> / <code>SUPPLEMENT</code>), kg, người thực hiện, lý do.<br>
+            <b>AC-04b:</b> Không có nút xóa hay sửa trực tiếp trên bất kỳ version nào.
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin-bottom:12px">B — Lập & Điều chỉnh kế hoạch tháng</p>
+      <div class="grid2" style="margin-bottom:20px">
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-05 · Lập kế hoạch tháng đầu năm</div>
+          <div class="story-text">Là Phòng KT, tôi muốn phân bổ kế hoạch sản lượng điều hành theo từng tháng (12 tháng) cho từng Đội, với tỷ lệ % không đều nhau tùy mùa vụ và điều kiện thực tế.</div>
+          <div class="story-ac">
+            <b>AC-05a:</b> Nhập được % hoặc kg cho mỗi tháng theo từng Đội.<br>
+            <b>AC-05b:</b> Σ(12 tháng) của mỗi Đội phải = KPI năm của Đội đó. Hệ thống kiểm tra và cảnh báo nếu lệch.<br>
+            <b>AC-05c:</b> Hỗ trợ sao chép % từ Đội này sang Đội khác để nhập nhanh khi kế hoạch giống nhau.
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-06 · Điều chỉnh % kế hoạch tháng (Adaptive KPI)</div>
+          <div class="story-text">Là Phòng KT, khi thực tế tháng trước hụt so với kế hoạch, tôi muốn điều chỉnh % các tháng còn lại (VD: 12% → 12,5%) để tổng năm vẫn đạt chỉ tiêu — và hệ thống tự động cập nhật xuống tất cả các cấp dưới.</div>
+          <div class="story-ac">
+            <b>AC-06a:</b> Khi Phòng KT thay đổi % tháng toàn Công ty, hệ thống <strong>tự cascade</strong> chỉ tiêu xuống Đội và Ga theo cùng tỷ lệ % điều chỉnh — không yêu cầu Đội/Ga nhập lại thủ công.<br>
+            <b>AC-06b:</b> Mỗi lần điều chỉnh tạo bản ghi audit: tháng nào, % cũ → % mới, người điều chỉnh, lý do, thời gian.<br>
+            <b>AC-06c:</b> <code>quota_original</code> không bị ghi đè; hệ thống lưu thêm <code>quota_adjusted</code>.<br>
+            <b>AC-06d:</b> Gửi thông báo email tới Đội trưởng các Đội liên quan khi có điều chỉnh.
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-07 · Cài đặt mục tiêu Phấn đấu</div>
+          <div class="story-text">Là Phòng KT, tôi muốn cài đặt mục tiêu phấn đấu (% vượt hoặc kg vượt thêm) cho toàn Công ty và từng Đội để làm ngưỡng khen thưởng nội bộ.</div>
+          <div class="story-ac">
+            <b>AC-07a:</b> Nhập theo % vượt (VD: +5%) hoặc kg tuyệt đối. Hệ thống tính <code>quota_phandau = quota_khoan × (1 + %PD)</code>.<br>
+            <b>AC-07b:</b> Mục tiêu phấn đấu hiển thị riêng biệt, không cộng vào chỉ tiêu pháp lệnh.<br>
+            <b>AC-07c:</b> Có thể cài khác nhau theo từng Đội.
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-08 · Giao khoán chính thức xuống Đội (Lock)</div>
+          <div class="story-text">Là Phòng KT, sau khi hoàn tất phân bổ và kiểm tra, tôi muốn "Chốt & Giao" để lệnh khoán có hiệu lực chính thức và ngăn thay đổi ngoài ý muốn.</div>
+          <div class="story-ac">
+            <b>AC-08a:</b> Trạng thái chuyển <code>DRAFT</code> → <code>DA_GIAO</code> khi bấm "Chốt & Giao".<br>
+            <b>AC-08b:</b> Khi ở <code>DA_GIAO</code>: không sửa được % phân bổ; mọi thay đổi phải qua luồng "Điều chỉnh" (US-06) hoặc "Khoán bổ sung" (US-02).<br>
+            <b>AC-08c:</b> Hệ thống gửi thông báo email tới Đội trưởng khi lệnh khoán được chốt.<br>
+            <b>AC-08d:</b> Phòng KT xem được danh sách Đội đã nhận / chưa nhận khoán.
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin-bottom:12px">C — Theo dõi & Báo cáo tổng hợp</p>
+      <div class="grid2">
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-09 · Bảng tổng hợp KPI theo Đội (YTD)</div>
+          <div class="story-text">Là Phòng KT, tôi muốn xem bảng tổng hợp sản lượng khoán và thực hiện của tất cả các Đội theo từng tháng và lũy kế năm để có cái nhìn toàn cảnh.</div>
+          <div class="story-ac">
+            <b>AC-09a:</b> Hiển thị: SL khoán tháng (gốc + carry + hiệu lực), SL thực hiện, % đạt, SL lũy kế năm, % lũy kế năm — cho từng Đội.<br>
+            <b>AC-09b:</b> Highlight đỏ nếu % đạt tháng &lt; 90%; highlight xanh nếu vượt phấn đấu.<br>
+            <b>AC-09c:</b> Cảnh báo rõ nếu Đội nào chưa được cài chỉ tiêu cho tháng hiện tại.<br>
+            <b>AC-09d:</b> Cho phép lọc theo năm, tháng, Đội. Có nút Export Excel.
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-10 · Xem 3 lớp KPI của tháng</div>
+          <div class="story-text">Là Phòng KT, khi xem chỉ tiêu tháng của một Đội, tôi muốn thấy rõ 3 con số: KPI gốc đầu năm / phần carry-forward / KPI hiệu lực thực tế — để hiểu tại sao chỉ tiêu tháng này lại cao hoặc thấp hơn bình thường.</div>
+          <div class="story-ac">
+            <b>AC-10a:</b> Hiển thị 3 trường rõ ràng: <code>Khoán gốc</code> | <code>± Carry</code> | <code>= Khoán hiệu lực</code>.<br>
+            <b>AC-10b:</b> Tooltip hoặc popover giải thích "Carry +200 kg từ tháng trước do hụt 200 kg".
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-11 · Bảng xếp hạng KPI toàn Công ty</div>
+          <div class="story-text">Là Phòng KT, tôi muốn xem xếp hạng các Đội theo % hoàn thành khoán tháng và năm để có căn cứ khen thưởng cấp Công ty.</div>
+          <div class="story-ac">
+            <b>AC-11a:</b> Bảng xếp hạng hiển thị: hạng, tên Đội, % hoàn thành khoán chính, % hoàn thành phấn đấu.<br>
+            <b>AC-11b:</b> Tách riêng 2 bảng: khen thưởng khoán chính và khen thưởng phấn đấu (tương tự cấu trúc XLS thực tế T9 KHEN THƯỞNG).<br>
+            <b>AC-11c:</b> Có thể lọc theo tháng hoặc lũy kế năm.
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-role" style="background:var(--green-l);color:var(--green-d)">US-12 · Xuất báo cáo theo biểu mẫu</div>
+          <div class="story-text">Là Phòng KT, tôi muốn xuất dữ liệu ra file Excel theo các biểu mẫu tiêu chuẩn để nộp lên Tập Đoàn hoặc lưu hồ sơ.</div>
+          <div class="story-ac">
+            <b>AC-12a:</b> Hỗ trợ 10 biểu mẫu: 4 mẫu mặc định (hệ thống định nghĩa) + 6 mẫu tùy chỉnh theo yêu cầu từng đơn vị.<br>
+            <b>AC-12b:</b> Chọn được kỳ (tháng / năm / khoảng tùy chọn) trước khi xuất.<br>
+            <b>AC-12c:</b> File xuất ra đúng format template cố định, không bị lệch cột.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /Actor 1 -->
+
+
+  <!-- ══ ACTOR 2: ĐỘI TRƯỞNG ══ -->
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-head" style="background:var(--blue-d); color:#fff; font-size:13px">
+      🏗 Tác nhân 2 — Đội trưởng (Cấp Đội sản xuất)
+      <span class="badge" style="background:rgba(255,255,255,.2); color:#fff">US-13 → US-22</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);margin-bottom:12px">D — Nhận khoán & Phân bổ xuống Ga</p>
+      <div class="grid2" style="margin-bottom:20px">
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-13 · Xem chỉ tiêu năm & tháng được giao</div>
+          <div class="story-text">Là Đội trưởng, tôi muốn thấy chỉ tiêu năm của Đội và kế hoạch tháng do Công ty giao để nắm được toàn bộ nhiệm vụ của Đội trong năm.</div>
+          <div class="story-ac">
+            <b>AC-13a:</b> Hiển thị rõ: Khoán năm Đội (kg), % phân bổ từng tháng, kg từng tháng, mục tiêu phấn đấu.<br>
+            <b>AC-13b:</b> Đội trưởng chỉ xem — không sửa được các giá trị Công ty đã chốt.<br>
+            <b>AC-13c:</b> Nhận thông báo (email hoặc in-app) khi lệnh khoán từ Công ty được giao.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-14 · Phân bổ khoán tháng xuống Ga</div>
+          <div class="story-text">Là Đội trưởng, tôi muốn chia chỉ tiêu tháng của Đội xuống từng Ga (theo % hoặc kg) để mỗi Ga biết nhiệm vụ của mình trong tháng đó.</div>
+          <div class="story-ac">
+            <b>AC-14a:</b> Ràng buộc cứng: Σ(kg các Ga) = Khoán hiệu lực tháng của Đội (bao gồm phần carry). Cảnh báo và chặn lưu nếu không khớp.<br>
+            <b>AC-14b:</b> Nhập theo % hoặc kg; hệ thống tự quy đổi.<br>
+            <b>AC-14c:</b> Hỗ trợ Export mẫu Excel → nhập số → Import lại để nhập nhanh khi Đội có nhiều Ga.<br>
+            <b>AC-14d:</b> Lưu trạng thái <code>DRAFT</code> trong khi chưa duyệt; Ga chưa thấy chỉ tiêu cho đến khi Đội trưởng duyệt.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-15 · Cài phấn đấu riêng cho từng Ga</div>
+          <div class="story-text">Là Đội trưởng, tôi muốn cài thêm mục tiêu phấn đấu riêng cho từng Ga (kg hoặc %) để khuyến khích các Ga vượt chỉ tiêu.</div>
+          <div class="story-ac">
+            <b>AC-15a:</b> Mục tiêu phấn đấu Ga lưu riêng cột, không cộng vào chỉ tiêu pháp lệnh giao cho Ga.<br>
+            <b>AC-15b:</b> Có thể cài khác nhau cho từng Ga; có thể để trống (không bắt buộc).
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-16 · Duyệt & Giao khoán chính thức xuống Ga</div>
+          <div class="story-text">Là Đội trưởng, sau khi phân bổ và kiểm tra xong, tôi muốn "Duyệt & Giao" để lệnh khoán có hiệu lực — Ga bắt đầu nhìn thấy chỉ tiêu tháng.</div>
+          <div class="story-ac">
+            <b>AC-16a:</b> Trạng thái chuyển <code>DRAFT</code> → <code>DA_GIAO</code> sau khi duyệt.<br>
+            <b>AC-16b:</b> Ga <strong>chỉ thấy KPI tháng đó</strong> của Ga mình — không thấy KPI năm của Đội, không thấy KPI của Ga khác.<br>
+            <b>AC-16c:</b> Hệ thống gửi thông báo tới Trưởng Ga khi có lệnh khoán mới.<br>
+            <b>AC-16d:</b> Đội trưởng xem được danh sách Ga đã nhận / chưa nhận thông báo.
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);margin-bottom:12px">E — Điều chỉnh & Lũy kế bù trừ</p>
+      <div class="grid2" style="margin-bottom:20px">
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-17 · Xem carry-forward & điều chỉnh khoán tháng sau</div>
+          <div class="story-text">Là Đội trưởng, khi tháng hiện tại sắp kết thúc, tôi muốn xem phần thiếu/dư của từng Ga và xác nhận khoán tháng sau đã được tính đúng lũy kế bù trừ.</div>
+          <div class="story-ac">
+            <b>AC-17a:</b> Hệ thống tự tính <code>carry_delta = Actual − Planned</code> khi tháng kết thúc hoặc khi bấm "Chốt tháng".<br>
+            <b>AC-17b:</b> Khoán tháng sau hiển thị 3 dòng: <code>Khoán gốc T+1</code> | <code>± Carry từ T</code> | <code>= Khoán hiệu lực T+1</code>. Ba dòng luôn hiển thị đồng thời.<br>
+            <b>AC-17c:</b> Nếu Đội trưởng muốn điều chỉnh thêm ngoài carry tự động, phải nhập lý do và hệ thống lưu audit log riêng.<br>
+            <b>AC-17d:</b> Carry không được ghi đè <code>quota_original</code> — phải lưu riêng trường <code>carry_delta</code>.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-18 · Nhận & Xem khi Công ty điều chỉnh % tháng</div>
+          <div class="story-text">Là Đội trưởng, khi Phòng KT điều chỉnh % kế hoạch tháng của toàn Công ty, tôi muốn hệ thống tự cập nhật chỉ tiêu Ga thuộc Đội tôi mà không cần tôi nhập lại tay, và tôi nhận được thông báo rõ ràng.</div>
+          <div class="story-ac">
+            <b>AC-18a:</b> Hệ thống tự scale chỉ tiêu tháng các Ga thuộc Đội tôi theo cùng tỷ lệ Công ty điều chỉnh.<br>
+            <b>AC-18b:</b> Tôi nhận email: "Khoán tháng X Đội Y đã điều chỉnh từ A kg → B kg theo quyết định Phòng KT ngày Z."<br>
+            <b>AC-18c:</b> Tôi có thể xem lịch sử tất cả lần điều chỉnh của từng Ga.
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);margin-bottom:12px">F — Theo dõi & Báo cáo cấp Đội</p>
+      <div class="grid2">
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-19 · Theo dõi tiến độ các Ga trong tháng</div>
+          <div class="story-text">Là Đội trưởng, tôi muốn theo dõi tiến độ thực hiện sản lượng của từng Ga trong tháng hiện tại để can thiệp kịp thời khi Ga nào đó có nguy cơ không đạt.</div>
+          <div class="story-ac">
+            <b>AC-19a:</b> Bảng hiển thị: tên Ga, khoán tháng hiệu lực, SL thực hiện lũy kế đến hôm nay (từ Sổ mủ), % đạt, số ngày còn lại, SL bình quân cần thực hiện/ngày để đạt.<br>
+            <b>AC-19b:</b> Highlight đỏ Ga đang dưới 40% vào giữa tháng (ngày 15+).<br>
+            <b>AC-19c:</b> Timestamp "Cập nhật lần cuối lúc HH:MM DD/MM" từ đợt sync Sổ mủ gần nhất.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-20 · Bảng xếp hạng Ga & CN trong Đội</div>
+          <div class="story-text">Là Đội trưởng, tôi muốn xem bảng xếp hạng % hoàn thành khoán của các Ga và của Công nhân trong Đội để có căn cứ khen thưởng nội bộ cuối tháng.</div>
+          <div class="story-ac">
+            <b>AC-20a:</b> Bảng xếp hạng Ga: hạng, tên Ga, khoán tháng, thực hiện, % đạt khoán chính, % đạt phấn đấu.<br>
+            <b>AC-20b:</b> Bảng xếp hạng CN trong Đội: hạng, tên CN, Ga, khoán tháng, thực hiện, % đạt (tương tự XLS T9 Khen thưởng thực tế).<br>
+            <b>AC-20c:</b> Tách riêng 2 bảng: khoán pháp lệnh và khoán phấn đấu.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-21 · Xem báo cáo lũy kế năm của Đội</div>
+          <div class="story-text">Là Đội trưởng, tôi muốn xem sản lượng lũy kế năm của Đội, phần còn lại phải thực hiện và bình quân tháng cần đạt — giống bảng XLS đang dùng thực tế.</div>
+          <div class="story-ac">
+            <b>AC-21a:</b> Hiển thị: Khoán năm, Phấn đấu năm, Thực hiện lũy kế đến tháng hiện tại, SL còn lại, BQ tháng cần đạt.<br>
+            <b>AC-21b:</b> Nếu SL còn lại âm (đã vượt khoán năm): hiển thị màu xanh + badge "VƯỢT KHOÁN NĂM", không hiện lỗi hay chặn.<br>
+            <b>AC-21c:</b> Có thể xem theo từng Ga riêng hoặc tổng hợp toàn Đội.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--blue)">
+          <div class="story-role" style="background:var(--blue-l);color:var(--blue-d)">US-22 · Xuất báo cáo giao khoán & KPI theo định dạng mẫu</div>
+          <div class="story-text">Là Đội trưởng, tôi muốn xuất file Excel bảng giao khoán tháng (theo mẫu thực tế đang dùng tại đơn vị) để lưu hồ sơ và ký duyệt.</div>
+          <div class="story-ac">
+            <b>AC-22a:</b> Export được bảng giao khoán cho Ga (tương tự file XLS T11/T12 CsTanBien thực tế).<br>
+            <b>AC-22b:</b> Export được bảng KPI CN tháng (khoán CC, cạo choàng, phần trống, phấn đấu, thực hiện, còn lại).<br>
+            <b>AC-22c:</b> Chọn được tháng/năm trước khi xuất.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /Actor 2 -->
+
+
+  <!-- ══ ACTOR 3: TRƯỞNG GA ══ -->
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-head" style="background:var(--indigo); color:#fff; font-size:13px">
+      🌿 Tác nhân 3 — Trưởng Ga / Trưởng Nhóm (Cấp Ga)
+      <span class="badge" style="background:rgba(255,255,255,.2); color:#fff">US-23 → US-31</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--indigo);margin-bottom:12px">G — Nhận khoán tháng & Thiết lập SPC</p>
+      <div class="grid2" style="margin-bottom:20px">
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-23 · Nhận & Xem chỉ tiêu khoán tháng</div>
+          <div class="story-text">Là Trưởng Ga, tôi muốn xem chỉ tiêu khoán tháng mà Đội giao xuống để nắm nhiệm vụ và triển khai xuống công nhân.</div>
+          <div class="story-ac">
+            <b>AC-23a:</b> Ga chỉ thấy KPI tháng của Ga mình — <strong>không thấy KPI năm của Đội</strong>, không thấy KPI của Ga khác.<br>
+            <b>AC-23b:</b> Hiển thị: Khoán tháng (gốc + carry + hiệu lực), Phấn đấu tháng, tháng/năm áp dụng.<br>
+            <b>AC-23c:</b> Nhận thông báo (in-app hoặc email) khi lệnh khoán mới được Đội trưởng giao.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-24 · Gán phần cây (SPC) và khoán cho Công nhân</div>
+          <div class="story-text">Là Trưởng Ga, tôi muốn gán loại phần cây (Khoán CC / Cạo choàng / Phần trống) và mức khoán tương ứng cho từng công nhân trong tháng để xác định trách nhiệm thực hiện.</div>
+          <div class="story-ac">
+            <b>AC-24a:</b> Danh sách công nhân lấy từ Sổ mủ điện tử — không nhập lại tay.<br>
+            <b>AC-24b:</b> Mỗi CN có thể có đồng thời nhiều loại SPC trong cùng một tháng: CC + Cạo choàng + Phần trống + Phấn đấu.<br>
+            <b>AC-24c:</b> Tổng khoán CN (CC + Cạo choàng + Phần trống) có thể nhỏ hơn khoán Ga (phần chênh = Phần trống chưa gán người).<br>
+            <b>AC-24d:</b> Hỗ trợ Import Excel theo mẫu để nhập nhanh khi Ga có 30–40 CN.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-25 · Gán khoán Phấn đấu riêng cho Công nhân</div>
+          <div class="story-text">Là Trưởng Ga, tôi muốn bổ sung mức khoán phấn đấu riêng cho những công nhân tích cực, ngoài khoán pháp lệnh.</div>
+          <div class="story-ac">
+            <b>AC-25a:</b> Khoán phấn đấu lưu riêng cột — không làm thay đổi khoán pháp lệnh của CN.<br>
+            <b>AC-25b:</b> Có thể để trống (không bắt buộc). Chỉ CN nào được cài thì mới hiện trong bảng xếp hạng phấn đấu.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-26 · Copy cấu hình SPC từ tháng trước</div>
+          <div class="story-text">Là Trưởng Ga, vào đầu tháng mới khi phần cây không thay đổi nhiều, tôi muốn copy lại cấu hình SPC tháng trước để không phải nhập lại toàn bộ từ đầu.</div>
+          <div class="story-ac">
+            <b>AC-26a:</b> Nút "Sao chép từ tháng trước" tạo bản draft với đủ cấu hình SPC tháng cũ.<br>
+            <b>AC-26b:</b> Trưởng Ga vẫn phải xem lại và bấm "Xác nhận" trước khi có hiệu lực — tránh copy nhầm.<br>
+            <b>AC-26c:</b> CN có trạng thái <code>NGHI_VIEC</code> hoặc <code>DIEU_CHUYEN</code> không được copy tự động; hệ thống cảnh báo để Trưởng Ga xử lý thủ công.
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--indigo);margin-bottom:12px">H — Điều chuyển Công nhân giữa tháng</p>
+      <div class="grid2" style="margin-bottom:20px">
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-27 · Điều chuyển Công nhân sang Ga khác giữa tháng</div>
+          <div class="story-text">Là Trưởng Ga, khi có công nhân chuyển sang Ga khác giữa tháng, tôi muốn hệ thống chốt sản lượng tại thời điểm điều chuyển và ghi rõ lịch sử để không bị mất dữ liệu hay tính nhầm.</div>
+          <div class="story-ac">
+            <b>AC-27a:</b> Chọn: CN điều chuyển, ngày hiệu lực, Ga nhận. Hệ thống chốt SL CN cũ đến ngày (ngày-1); CN nhận khoán từ ngày hiệu lực trở đi.<br>
+            <b>AC-27b:</b> Lưu log điều chuyển: CN, Ga gốc, Ga mới, ngày, người thực hiện. Không xóa record SL cũ.<br>
+            <b>AC-27c:</b> Phần cây CN chuyển đi được đánh dấu "Phần trống" hoặc giao CN khác dạng "Cạo choàng" — Trưởng Ga chọn.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-28 · Ghi nhận Công nhân nghỉ việc giữa năm</div>
+          <div class="story-text">Là Trưởng Ga, khi có công nhân nghỉ việc, tôi muốn đánh dấu trạng thái và phân lại phần cây mà không mất dữ liệu lịch sử của CN cũ.</div>
+          <div class="story-ac">
+            <b>AC-28a:</b> Cập nhật trạng thái CN = <code>NGHI_VIEC</code> với ngày nghỉ. Record không bị xóa.<br>
+            <b>AC-28b:</b> SL đã thực hiện của CN nghỉ vẫn được tính vào thống kê Ga cho đến ngày nghỉ.<br>
+            <b>AC-28c:</b> Hệ thống gợi ý gán phần cây bỏ trống thành "Cạo choàng" cho CN khác.
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--indigo);margin-bottom:12px">I — Theo dõi & Báo cáo cấp Ga</p>
+      <div class="grid2">
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-29 · Theo dõi tiến độ từng Công nhân trong tháng</div>
+          <div class="story-text">Là Trưởng Ga, tôi muốn xem sản lượng thực hiện của từng CN (từ Sổ mủ) so với khoán hàng ngày/tuần để can thiệp kịp thời.</div>
+          <div class="story-ac">
+            <b>AC-29a:</b> Bảng CN: khoán tháng (CC + cạo choàng + phần trống), SL thực hiện lũy kế đến hôm nay, % đạt, SL còn lại.<br>
+            <b>AC-29b:</b> Highlight đỏ CN đang dưới 40% vào giữa tháng.<br>
+            <b>AC-29c:</b> SL còn lại năm hiển thị kể cả khi âm (vượt khoán năm) — không cắt về 0, hiển thị màu xanh.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-30 · Bảng xếp hạng CN trong Ga cuối tháng</div>
+          <div class="story-text">Là Trưởng Ga, cuối tháng tôi muốn xem bảng xếp hạng CN theo % đạt khoán chính và phấn đấu để đề xuất khen thưởng lên Đội trưởng.</div>
+          <div class="story-ac">
+            <b>AC-30a:</b> Bảng xếp hạng khoán chính: hạng, tên CN, khoán tháng, thực hiện, % đạt, trạng thái (Đạt / Vượt / Chưa đạt).<br>
+            <b>AC-30b:</b> Bảng xếp hạng phấn đấu riêng: thêm cột SL vượt phấn đấu. Chỉ hiện CN có cài khoán phấn đấu.<br>
+            <b>AC-30c:</b> Export được 2 bảng này ra Excel.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left-color:var(--indigo)">
+          <div class="story-role" style="background:var(--indigo-l);color:var(--indigo)">US-31 · Xem chi tiết SL theo từng loại mủ của CN</div>
+          <div class="story-text">Là Trưởng Ga, tôi muốn xem chi tiết sản lượng từng loại mủ (mủ chén, mủ dây...) của từng CN để đánh giá chất lượng khai thác.</div>
+          <div class="story-ac">
+            <b>AC-31a:</b> Dữ liệu loại mủ lấy từ Sổ mủ điện tử, hiển thị chi tiết theo CN và tháng.<br>
+            <b>AC-31b:</b> Có tổng hợp toàn Ga theo từng loại mủ.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /Actor 3 -->
+
+
+  <!-- ══ ACTOR 4: SYSTEM JOBS ══ -->
+  <div class="card">
+    <div class="card-head" style="background:var(--slate); color:#fff; font-size:13px">
+      ⚙️ Tác nhân 4 — Hệ thống (Automated System Jobs)
+      <span class="badge" style="background:rgba(255,255,255,.2); color:#fff">SJ-01 → SJ-05</span>
+    </div>
+    <div class="card-body">
+      <div class="grid2">
+
+        <div class="story-card" style="border-left:4px solid var(--accent)">
+          <div class="story-role" style="background:#d1fae5;color:#064e3b">SJ-01 · Đồng bộ sản lượng hàng ngày từ Sổ mủ</div>
+          <div class="story-text">Hệ thống tự động đồng bộ sản lượng thu hoạch đã duyệt từ Sổ mủ điện tử về module Khoán mỗi ngày để luôn có số liệu thực tế mới nhất phục vụ tính KPI.</div>
+          <div class="story-ac">
+            <b>AC-SJ01a:</b> Job chạy hàng ngày lúc 22:00 (hoặc trigger khi Trưởng Ga bấm "Chốt ngày" ở Sổ mủ). Gọi <code>GET /api/so-mu/production?from=...&to=...&team_id=...</code>.<br>
+            <b>AC-SJ01b:</b> Dữ liệu group by <code>(worker_id, date)</code>, lưu vào <code>actual_production</code> kèm <code>source_ref</code> trỏ về record Sổ mủ gốc.<br>
+            <b>AC-SJ01c:</b> Sau sync, cập nhật timestamp "Cập nhật lần cuối" hiển thị trên dashboard.<br>
+            <b>AC-SJ01d:</b> Nếu API Sổ mủ không khả dụng: ghi log lỗi, giữ nguyên dữ liệu cũ, không ghi đè, cảnh báo admin qua email.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left:4px solid var(--accent)">
+          <div class="story-role" style="background:#d1fae5;color:#064e3b">SJ-02 · Cascading update khi Phòng KT thay % kế hoạch tháng</div>
+          <div class="story-text">Khi Phòng KT xác nhận thay đổi % kế hoạch tháng toàn Công ty, hệ thống tự động tính lại và cập nhật chỉ tiêu xuống toàn bộ Đội và Ga liên quan mà không cần thao tác thủ công.</div>
+          <div class="story-ac">
+            <b>AC-SJ02a:</b> Background job tính lại <code>quota_adjusted</code> cho từng Đội theo tỷ lệ delta; cascade tiếp xuống Ga thuộc Đội.<br>
+            <b>AC-SJ02b:</b> Tuyệt đối không ghi đè <code>quota_original</code>. Chỉ cập nhật <code>quota_adjusted</code> và <code>carry_delta</code>.<br>
+            <b>AC-SJ02c:</b> Ghi audit log đầy đủ: ai thay đổi, tháng nào, % cũ/mới, timestamp, lý do.<br>
+            <b>AC-SJ02d:</b> Gửi email thông báo đến Đội trưởng và Trưởng Ga liên quan.
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left:4px solid var(--accent)">
+          <div class="story-role" style="background:#d1fae5;color:#064e3b">SJ-03 · Tính carry-forward cuối tháng</div>
+          <div class="story-text">Vào đầu tháng mới (ngày 1), hệ thống tự động tính phần thiếu hoặc dư của tháng vừa rồi và cộng/trừ vào khoán tháng mới cho từng Đội, Ga và CN.</div>
+          <div class="story-ac">
+            <b>AC-SJ03a:</b> Job chạy ngày 1 hàng tháng. Tính <code>carry = Actual_T − Planned_T</code> cho từng Đội, Ga.<br>
+            <b>AC-SJ03b:</b> Thiếu (carry &lt; 0): cộng |carry| vào <code>quota_effective</code> tháng T+1. Dư (carry &gt; 0): trừ đi.<br>
+            <b>AC-SJ03c:</b> <code>quota_original</code> tháng T+1 giữ nguyên. Chỉ <code>carry_delta</code> và <code>quota_effective</code> thay đổi.<br>
+            <b>AC-SJ03d:</b> Đội trưởng và Trưởng Ga nhận email tóm tắt: "[Ga X] tháng trước thiếu Y kg → tháng này khoán hiệu lực = A + Y = B kg."
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left:4px solid var(--accent)">
+          <div class="story-role" style="background:#d1fae5;color:#064e3b">SJ-04 · Cảnh báo tiến độ giữa tháng</div>
+          <div class="story-text">Vào ngày 15 hàng tháng, hệ thống tự kiểm tra tiến độ và gửi cảnh báo tới Đội trưởng nếu có Ga đang dưới ngưỡng nguy hiểm để kịp thời điều hành.</div>
+          <div class="story-ac">
+            <b>AC-SJ04a:</b> Job chạy ngày 15 hàng tháng. Tính % hoàn thành = SL lũy kế đến ngày 15 / (Khoán tháng × 50%).<br>
+            <b>AC-SJ04b:</b> % hoàn thành &lt; 40%: gửi email cảnh báo tới Đội trưởng và Trưởng Ga với nội dung: tên Ga, khoán tháng, thực hiện đến giờ, % đạt, SL cần bù trong 15 ngày còn lại.<br>
+            <b>AC-SJ04c:</b> Đội trưởng có thể tắt cảnh báo cho một Ga cụ thể (VD: Ga đang trong giai đoạn dừng cạo theo kế hoạch).
+          </div>
+        </div>
+
+        <div class="story-card" style="border-left:4px solid var(--accent); grid-column: 1 / -1">
+          <div class="story-role" style="background:#d1fae5;color:#064e3b">SJ-05 · Cảnh báo Ga chưa được giao khoán đầu tháng</div>
+          <div class="story-text">Vào ngày 5 hàng tháng, hệ thống kiểm tra và cảnh báo nếu còn Ga nào chưa được Đội trưởng giao chỉ tiêu tháng — tránh tình trạng Ga bắt đầu tháng mà không biết nhiệm vụ của mình là bao nhiêu.</div>
+          <div class="story-ac">
+            <b>AC-SJ05a:</b> Job chạy ngày 5 hàng tháng. Quét tất cả Ga đang <code>ACTIVE</code> xem đã có <code>ga_monthly_quota</code> trạng thái <code>DA_GIAO</code> cho tháng hiện tại chưa.<br>
+            <b>AC-SJ05b:</b> Nếu thiếu: gửi email nhắc Đội trưởng tương ứng danh sách Ga chưa được giao khoán.<br>
+            <b>AC-SJ05c:</b> Dashboard Đội trưởng hiển thị badge cảnh báo đỏ kèm số Ga chưa giao khoán — cho đến khi tất cả Ga có chỉ tiêu thì badge tự mất.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /Actor 4 -->
+
+</section><!-- /stories -->
+
+
+<!-- ════ SECTION 6: DATA ════ -->
+<section id="data">
+  <div class="section-head">
+    <div class="icon" style="background:#f1f5f9; color:var(--slate)">⑤</div>
+    <h2>Cấu trúc Dữ liệu Cốt lõi<span>Data Model</span></h2>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head">📦 Bảng chính (Core Tables)</div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Bảng</th><th>Mô tả</th><th>Trường quan trọng</th></tr></thead>
+            <tbody>
+              <tr><td><code>annual_quota</code></td><td>Khoán năm</td><td>year, total_kg, version, is_baseline</td></tr>
+              <tr><td><code>team_quota</code></td><td>Phân bổ Đội</td><td>team_id, annual_quota_id, kg, pct</td></tr>
+              <tr><td><code>monthly_plan</code></td><td>KH tháng từng Đội</td><td>team_id, month, planned_kg, pct, carry_in, carry_out</td></tr>
+              <tr><td><code>ga_monthly_quota</code></td><td>Giao khoán cho Ga</td><td>ga_id, month, quota_original, carry_delta, quota_effective, status</td></tr>
+              <tr><td><code>worker_spc</code></td><td>SPC từng CN</td><td>worker_id, ga_id, spc_type, start_date, end_date, kg</td></tr>
+              <tr><td><code>quota_supplement</code></td><td>Khoán bổ sung</td><td>parent_annual_id, added_kg, reason, ref_no, created_at</td></tr>
+              <tr><td><code>actual_production</code></td><td>SL thực tế (GET từ Sổ mủ)</td><td>worker_id, date, kg_quy_kho, source_ref</td></tr>
+              <tr><td><code>quota_adjustment_log</code></td><td>Audit log điều chỉnh</td><td>entity_type, entity_id, month, old_val, new_val, reason, user_id, ts</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">📋 Enum & Trạng thái</div>
+      <div class="card-body">
+        <div class="rule-box green" style="margin-bottom:8px"><div class="rule-label">SPC Type</div><p><code>KHOAN_CC</code> | <code>CAO_CHOANG</code> | <code>PHAN_TRONG</code> | <code>PHAN_DAU</code></p></div>
+        <div class="rule-box blue" style="margin-bottom:8px"><div class="rule-label">Worker Status</div><p><code>ACTIVE</code> | <code>NGHI_VIEC</code> | <code>DIEU_CHUYEN</code> | <code>HO_SAN</code> | <code>TUYEN_MOI</code></p></div>
+        <div class="rule-box indigo" style="margin-bottom:8px"><div class="rule-label">KPI Status</div><p><code>CHUA_DAT</code> (&lt;100%) | <code>DAT</code> (=100%) | <code>VUOT</code> (&gt;100%) | <code>CHUA_CAI_DAT</code></p></div>
+        <div class="rule-box amber" style="margin-bottom:8px"><div class="rule-label">Plan Version Status</div><p><code>BASELINE</code> | <code>ADJUSTED</code> | <code>SUPPLEMENT</code></p></div>
+        <div class="rule-box green"><div class="rule-label">Quota Record Status</div><p><code>DRAFT</code> | <code>DA_GIAO</code> | <code>DA_CHOT</code></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SECTION 7: STATS ════ -->
+<section id="stats">
+  <div class="section-head">
+    <div class="icon" style="background:var(--blue-l); color:var(--blue-d)">⑥</div>
+    <h2>Flow 5 — Thống kê & Đánh giá KPI<span>Reporting & KPI Evaluation</span></h2>
+  </div>
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-head" style="background: var(--green-l); color:var(--green-d)">Thống kê theo Đội</div>
+      <div class="card-body">
+        <ul class="check-list">
+          <li>Sản lượng khoán tháng (3 lớp: gốc / carry / hiệu lực)</li>
+          <li>Lũy kế tháng + Lũy kế năm (YTD)</li>
+          <li>Sản lượng thực hiện (từ Sổ mủ)</li>
+          <li>% Thực hiện / Khoán &amp; % / Phấn đấu</li>
+          <li>SL còn lại năm &amp; BQ tháng cần đạt</li>
+          <li class="no">Cảnh báo nếu chưa cài chỉ tiêu cho tháng</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head" style="background: var(--blue-l); color:var(--blue-d)">Thống kê theo Ga</div>
+      <div class="card-body">
+        <ul class="check-list">
+          <li>Sản lượng khoán tháng (3 lớp)</li>
+          <li>Lũy kế tháng + Lũy kế năm</li>
+          <li>Sản lượng thực hiện</li>
+          <li>% Thực hiện / Phấn đấu</li>
+          <li>BQ tháng cần đạt</li>
+          <li class="no">Cảnh báo Ga chưa đặt chỉ tiêu</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head" style="background: var(--indigo-l); color:var(--indigo)">Thống kê theo Công nhân</div>
+      <div class="card-body">
+        <ul class="check-list">
+          <li>SL khoán CC / Cạo choàng / Phấn đấu tháng</li>
+          <li>SL thực hiện từng tháng + Lũy kế</li>
+          <li>SL còn lại năm (có thể âm)</li>
+          <li>% Đạt &amp; Xếp hạng trong Ga</li>
+          <li>Chi tiết từng loại mủ</li>
+          <li class="no">Cảnh báo chưa đặt chỉ tiêu</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">🏆 Ma trận Đánh giá KPI & Khen thưởng</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>% Hoàn thành</th><th>Trạng thái</th><th>Khoán chính</th><th>Khoán phấn đấu</th><th>Bù trừ sang kỳ sau</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge red">&lt; 100%</span></td><td>Chưa đạt</td><td>Không thưởng</td><td>Không thưởng</td><td>Cộng thiếu vào T+1</td></tr>
+            <tr><td><span class="badge blue">= 100%</span></td><td>Đạt yêu cầu</td><td>Thưởng khoán CC</td><td>Không thêm</td><td>Carry = 0</td></tr>
+            <tr><td><span class="badge green">&gt; 100% (khoán CC)</span></td><td>Vượt khoán</td><td>Thưởng CC</td><td>Thưởng PĐ nếu &gt; khoán PĐ</td><td>Trừ dư vào T+1</td></tr>
+            <tr><td><span class="badge indigo">Thứ hạng cao</span></td><td>Top Ga / Top CN</td><td>Thưởng xếp hạng</td><td>Thưởng top 1, 2, 3</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SECTION 8: API ════ -->
+<section id="api">
+  <div class="section-head">
+    <div class="icon" style="background:var(--green-l); color:var(--green-d)">⑦</div>
+    <h2>Tích hợp Sổ mủ điện tử<span>API Integration</span></h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="rule-box blue"><div class="rule-label">📥 Sổ mủ → Khoán (chính)</div><p>Hàng ngày module Khoán <strong>GET</strong> sản lượng thu hoạch đã duyệt từ API Sổ mủ, group by (worker_id, date), quy đổi sang kg quy khô, lưu vào <code>actual_production</code>.</p></div>
+      <div class="rule-box green"><div class="rule-label">📤 Khoán → Sổ mủ (tham chiếu)</div><p>Sau khi Trưởng Ga cài SPC tại module Khoán, hệ thống <strong>PUSH</strong> cấu hình phần cây (SPC) xuống Sổ mủ để gán vào phiên cạo. Hướng dữ liệu: một chiều chính là đọc từ Sổ mủ.</p></div>
+    </div>
+    <div class="card">
+      <div class="card-head">🔌 Gợi ý API Contract</div>
+      <div class="card-body">
+        <div class="formula" style="text-align:left; font-size:11px; line-height:1.8">
+          GET /api/so-mu/production<br>
+          &nbsp;&nbsp;?from=2025-11-01&amp;to=2025-11-30<br>
+          &nbsp;&nbsp;&amp;team_id=2<br>
+          → [{worker_id, date, kg_nuoc, kg_quy_kho, spc_type}]
+        </div>
+        <div class="formula" style="text-align:left; font-size:11px; line-height:1.8; margin-top:8px">
+          POST /api/so-mu/spc-config<br>
+          &nbsp;&nbsp;{ga_id, worker_id, spc_type, start_date, quota_kg}<br>
+          → 200 OK | 400 Validation Error
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="icon">🔄</span>
+    <p><strong>Realtime vs Batch:</strong> Chưa cần realtime. Đề xuất batch sync cuối ngày 22:00 hoặc khi Trưởng Ga bấm "Chốt ngày". Khoán hiển thị timestamp "Cập nhật lần cuối lúc...".</p>
+  </div>
+</section>
+
+<!-- ════ SECTION 9: RISK ════ -->
+<section id="risk">
+  <div class="section-head">
+    <div class="icon" style="background:var(--red-l); color:var(--red)">⑧</div>
+    <h2>Điểm Rủi ro & Edge Cases<span>Technical Risks</span></h2>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="rule-box red"><div class="rule-label">🚨 Edge Case #1 — SL còn lại âm</div><p>CN vượt khoán năm → <code>remaining_kg</code> âm. UI highlight xanh (VƯỢT KHOÁN), không block ghi nhận. Bù trừ sang kỳ sau tháng sau giảm KPI.</p></div>
+      <div class="rule-box red"><div class="rule-label">🚨 Edge Case #2 — SPC không có người (Phần trống)</div><p>SPC có kg khoán nhưng <code>worker_id = NULL</code>. Hệ thống phải chấp nhận. SL thực tế = 0. Hiển thị "Phần trống" rõ ràng.</p></div>
+      <div class="rule-box amber"><div class="rule-label">⚠️ Edge Case #3 — Nghỉ việc giữa năm</div><p>CN nghỉ việc: không xóa record, gắn <code>NGHI_VIEC</code>. SL đã thực hiện vẫn tính vào thống kê Ga.</p></div>
+    </div>
+    <div>
+      <div class="rule-box amber"><div class="rule-label">⚠️ Edge Case #4 — Biểu mẫu không đồng nhất giữa đơn vị</div><p>Cần trao đổi và thống nhất biểu mẫu với từng đơn vị trước khi code. 4 mẫu mặc định + 6 mẫu tùy chỉnh.</p></div>
+      <div class="rule-box indigo"><div class="rule-label">🔵 Thiết kế — 3 trường KPI quota</div><p>Mỗi <code>ga_monthly_quota</code> cần: <code>quota_original</code> + <code>carry_delta</code> + <code>quota_effective</code>. UI hiển thị cả 3 đồng thời với giải thích.</p></div>
+      <div class="rule-box blue"><div class="rule-label">🔵 Thiết kế — Cascade dùng background job</div><p>Khi Phòng KT điều chỉnh % tháng, cascading update nhiều record → dùng Hangfire background job để tránh timeout UI.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SECTION 10: EFFORT ════ -->
+<section id="effort">
+  <div class="section-head">
+    <div class="icon" style="background:#f1f5f9; color:var(--slate)">⑨</div>
+    <h2>Ước lượng Công lực & Công nghệ<span>Effort Estimate & Tech Stack</span></h2>
+  </div>
+  <div class="two-col" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-head">🛠 Tech Stack đề xuất (.NET)</div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Lớp</th><th>Công nghệ</th></tr></thead>
+            <tbody>
+              <tr><td>API</td><td>ASP.NET Core 8 — RESTful, JWT Auth</td></tr>
+              <tr><td>Web UI</td><td>ASP.NET MVC + Razor hoặc Blazor Server</td></tr>
+              <tr><td>ORM</td><td>Entity Framework Core + Repository Pattern</td></tr>
+              <tr><td>DB</td><td>SQL Server (soft-delete, versioning)</td></tr>
+              <tr><td>Sync job</td><td>Hangfire background job (batch daily)</td></tr>
+              <tr><td>Export Excel</td><td>EPPlus hoặc ClosedXML</td></tr>
+              <tr><td>Notify</td><td>SendGrid / SMTP Gmail theo phân quyền</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">📅 Ước lượng công lực</div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Hạng mục</th><th>FE (ngày)</th><th>BE (ngày)</th></tr></thead>
+            <tbody>
+              <tr><td>Thao tác nhập liệu 3 cấp</td><td>9</td><td>4.5</td></tr>
+              <tr><td>Export / Import</td><td>2</td><td>1</td></tr>
+              <tr><td>Thống kê 3 cấp</td><td>3</td><td>1.5</td></tr>
+              <tr><td>Xuất file báo cáo (10 mẫu)</td><td>7</td><td>5</td></tr>
+              <tr><td>DB + UI setup</td><td>1</td><td>1</td></tr>
+              <tr><td>Kiểm thử</td><td>2</td><td>2</td></tr>
+              <tr><td>Thông báo Gmail</td><td>2</td><td>1</td></tr>
+              <tr><td><strong>Tổng</strong></td><td><strong>26</strong></td><td><strong>16</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="rule-box amber" style="margin-top:10px; margin-bottom:0"><div class="rule-label">Tổng dự kiến</div><p>Dev + Report + Tester: <strong>~19 ngày</strong>. Xuất báo cáo: <strong>7 ngày</strong>. <strong>Tổng: ~26 ngày</strong>.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="border-top:4px solid var(--green)">
+    <div class="card-head" style="background:var(--green-xl); color:var(--green-d)">✅ Tóm tắt: Giải quyết được gì — Cần làm rõ thêm gì</div>
+    <div class="card-body">
+      <div class="grid2">
+        <div>
+          <p style="font-size:12.5px; font-weight:700; margin-bottom:10px; color:var(--green-d)">✓ Giải quyết triệt để:</p>
+          <ul class="check-list">
+            <li>Thay thế hoàn toàn bảng tính Excel thủ công</li>
+            <li>Phân bổ khoán top-down 4 cấp nhất quán, không sai số</li>
+            <li>Bù trừ sang kỳ sau tự động — không tính tay</li>
+            <li>Cascade điều chỉnh % tháng xuống toàn hệ thống</li>
+            <li>Đánh giá KPI realtime theo dữ liệu Sổ mủ</li>
+            <li>Lịch sử thay CN / điều chỉnh đầy đủ audit trail</li>
+            <li>Cảnh báo sớm Ga chưa cài chỉ tiêu & tiến độ giữa tháng</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:12.5px; font-weight:700; margin-bottom:10px; color:var(--amber)">⚡ Cần làm rõ trước khi dev:</p>
+          <ul class="check-list">
+            <li class="no">Quy tắc thưởng cụ thể khi vượt khoán (% thưởng / bậc)</li>
+            <li class="no">6 biểu mẫu tùy chỉnh (cần đơn vị cung cấp template)</li>
+            <li class="no">Tần suất đồng bộ Sổ mủ (batch hay event-driven)</li>
+            <li class="no">Phân quyền chi tiết (ai xem / sửa / duyệt ở từng cấp)</li>
+            <li class="no">Xử lý khi API Sổ mủ không khả dụng (offline mode)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /wrapper -->
+
+<footer>
+  <strong>Hệ thống Quản lý Khoán Sản lượng Cao su — Ecotech 2A</strong><br>
+  Đặc tả v1.0 · Cập nhật User Stories · Biên soạn dựa trên: Thông báo Công ty CP Cao su Tây Ninh T11–T12/2025 · File giao khoán CsTanBien · Phụ lục quản lý khoán · Sổ mủ điện tử Mekong & Quasa<br>
+  <span style="opacity:.5">Dành cho kỹ sư Fullstack .NET · Ecotech 2A © 2025</span>
+</footer>
+
+</body>
+</html>
